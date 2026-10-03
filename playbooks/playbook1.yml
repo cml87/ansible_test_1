@@ -1,0 +1,26 @@
+- name: Example Playbook
+  hosts: all
+  tasks:
+
+    # Runs as unprivileged user 'laborant'
+    - name: Check directory contents
+      ansible.builtin.command: ls -l /home/laborant
+      register: var1
+
+    - name: Print register of previous task
+      debug:
+        msg: "{{ var1 }}"
+
+
+
+    # Escalates privileges (sudo) ONLY for this task
+    # - name: Install Nginx package
+    #   ansible.builtin.apt:
+    #     name: nginx
+    #     state: present
+    #   become: true
+
+    # Runs as unprivileged user 'laborant' again
+    - name: Print welcome message
+      ansible.builtin.debug:
+        msg: "Task executed as standard user."

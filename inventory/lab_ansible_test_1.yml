@@ -1,0 +1,21 @@
+---
+# ssh -p 2201 -i ~/.ssh/iximiuz_labs_user laborant@localhost
+
+all:
+  hosts:
+    node-01:
+      ansible_host: 127.0.0.1
+      ansible_port: 2201
+      ansible_private_key_file: "~/.ssh/iximiuz_labs_user"
+      ansible_user: laborant
+      # ansible_become: true # log in as user 'laborant'. Use 'become: true' in tasks if needed
+      become_ask_pass: False # assuming laborant has passwordless sudo access configured on the node
+      # ansible_ssh_extra_args: "-o IdentitiesOnly=yes"
+    node-02:
+      ansible_host: 127.0.0.1
+      ansible_port: 2202
+      ansible_private_key_file: "~/.ssh/iximiuz_labs_user"
+      ansible_user: laborant
+      # ansible_become: true # log in as user 'laborant'. Use 'become: true' in tasks
+      become_ask_pass: False # assuming laborant has passwordless sudo access configured on the node
+      # ansible_ssh_extra_args: "-o IdentitiesOnly=yes"
