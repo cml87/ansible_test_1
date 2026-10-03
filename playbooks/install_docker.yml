@@ -2,6 +2,7 @@
 - hosts: all
   become: true
   vars:
+    username: laborant
     container_count: 4
     default_container_name: docker
     default_container_image: ubuntu
@@ -65,3 +66,24 @@
     # - name: Install Docker Module for Python
     #   pip:
     #     name: docker
+    - name: Enable and start Docker service
+      ansible.builtin.systemd_service:
+        name: docker.service
+        enabled: true
+        state: started
+      become: true
+
+    - name: Ensure Docker group exists
+      become: yes
+      ansible.builtin.group:
+        name: docker
+        state: present
+      register: docker_group
+
+    - name: Add User to docker group
+      become: yes
+      ansible.builtin.user:
+        name: "{{ username }}"
+        groups: docker 
+        append: true 
+      # when: docker_group is changed
