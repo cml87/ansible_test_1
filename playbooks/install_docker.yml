@@ -55,6 +55,7 @@
     - name: Update apt and install Docker Engine
       apt:
         pkg:
+          - httping
           - docker-ce
           - docker-ce-cli
           - containerd.io
